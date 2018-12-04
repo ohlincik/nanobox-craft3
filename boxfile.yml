@@ -1,0 +1,64 @@
+run.config:
+  # install php and associated runtimes
+  engine: php
+  # php engine configuration (php version, extensions, etc)
+  engine.config:
+    runtime: php-7.0
+    extensions:
+      - ctype
+      - curl
+      - fileinfo
+      - imagick
+      - iconv
+      - json
+      - mbstring
+      # - openssl
+      # - pcre
+      - pdo
+      - pdo_mysql
+      - session
+      # - reflection
+      # - spl
+      - zip
+      - intl
+      - dom
+    zend_extensions:
+      - opcache
+      - xdebug
+    allow_url_fopen: 'On'
+    default_locale: 'en_US'
+    error_reporting: 'E_ALL'
+    post_max_size: '20M'
+    upload_max_filesize: '20M'
+    # composer_install: 'composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader'
+
+    webserver: 'nginx'
+    document_root: web
+    nginx_index_list:
+      - index.php
+      - index.html
+    nginx_default_gateway: index.php
+
+  extra_steps:
+    - cp nginx.conf /data/etc/nginx/nginx.conf
+    - bash nanobox/set-evars.sh
+  build_triggers:
+    - nginx.conf
+
+web.craft:
+  start: php-server
+  network_dirs:
+    data.storage:
+      - storage
+      - web/cpresources
+  log_watch:
+    craft[stacktrace]: /app/storage/logs/web.log
+    craft[error]: /app/storage/logs/phperrors.log
+    php[error]: /data/var/log/php/php_error.log
+    php[fpm]: /data/var/log/php-fpm.log
+
+data.db:
+  image: nanobox/mysql:5.6
+
+data.storage:
+  image: nanobox/unfs:0.9
