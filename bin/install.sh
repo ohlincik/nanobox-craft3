@@ -21,7 +21,14 @@ rm -rf /tmp/craft
 
 # remove the .env file because it's not needed
 cd /app
-rm .env
+cp -f nanobox/.env.example .env
+
+# generate the security key
+chmod +x craft
+./craft setup/security-key
+
+# replace the db config with pre-set env variables
+cp -f nanobox/db.php config/db.php
 
 # running app info
 text="
