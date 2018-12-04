@@ -40,7 +40,7 @@ run.config:
     nginx_default_gateway: index.php
 
   extra_steps:
-    - cp nginx.conf /data/etc/nginx/nginx.conf
+    - cp nanobox/nginx.conf /data/etc/nginx/nginx.conf
     - bash nanobox/set-evars.sh
   build_triggers:
     - nginx.conf
