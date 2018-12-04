@@ -41,7 +41,6 @@ run.config:
 
   extra_steps:
     - cp nanobox/nginx.conf /data/etc/nginx/nginx.conf
-    - bash nanobox/set-evars.sh
   build_triggers:
     - nginx.conf
 
