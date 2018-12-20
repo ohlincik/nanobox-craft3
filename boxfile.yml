@@ -49,7 +49,7 @@ web.craft:
     data.storage:
       - storage
       - web/cpresources
-  writeable_dirs:
+  writable_dirs:
     - config
   log_watch:
     craft[stacktrace]: /app/storage/logs/web.log
