@@ -1,9 +1,7 @@
 run.config:
-  # install php and associated runtimes
   engine: php
-  # php engine configuration (php version, extensions, etc)
   engine.config:
-    runtime: php-7.0
+    runtime: php-7.1
     extensions:
       - ctype
       - curl
@@ -12,25 +10,19 @@ run.config:
       - iconv
       - json
       - mbstring
-      # - openssl
-      # - pcre
       - pdo
       - pdo_mysql
       - session
-      # - reflection
-      # - spl
+      - simplexml
       - zip
       - intl
       - dom
-    zend_extensions:
-      - opcache
-      - xdebug
     allow_url_fopen: 'On'
     default_locale: 'en_US'
     error_reporting: 'E_ALL'
     post_max_size: '20M'
     upload_max_filesize: '20M'
-    # composer_install: 'composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader'
+    composer_install: 'composer install --no-interaction --prefer-dist --optimize-autoloader'
 
     webserver: 'nginx'
     document_root: web
@@ -44,12 +36,21 @@ run.config:
   build_triggers:
     - nginx.conf
 
+  cache_dirs:
+    - vendor
+
+deploy.config:
+  transform:
+    - 'sed -i -e "s/\"dev\"/\"production\"/g" .env'
+
 web.craft:
   start: php-server
   network_dirs:
     data.storage:
       - storage
       - web/cpresources
+  writeable_dirs:
+    - config
   log_watch:
     craft[stacktrace]: /app/storage/logs/web.log
     craft[error]: /app/storage/logs/phperrors.log

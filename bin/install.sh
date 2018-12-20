@@ -16,11 +16,16 @@ composer create-project craftcms/craft craft
 shopt -s dotglob
 cp -a craft/* /app
 
-# - cleanup
+# cleanup
 rm -rf /tmp/craft
 
-# remove the .env file because it's not needed
+# go back to the main codebase directory
 cd /app
+
+# Add the Yii2 Redis package
+# composer require --prefer-dist yiisoft/yii2-redis:"~2.0.0"
+
+# replace the .env file with our version
 cp -f nanobox/.env.example .env
 
 # generate the security key
@@ -28,7 +33,7 @@ chmod +x craft
 ./craft setup/security-key
 
 # replace the db config with pre-set env variables
-cp -f nanobox/db.php config/db.php
+cp -f nanobox/config/db.php config/db.php
 
 # running app info
 text="
