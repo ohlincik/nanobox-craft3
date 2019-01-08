@@ -21,9 +21,10 @@ bash <(curl -sL https://git.io/fpPHA)
 This will do the following:
 
 - Create and configure a new instance of Nanobox environment
-- Install and configure PHP 7 with all necessary extensions
+- Install and configure PHP 7.1 with all necessary extensions
 - Install and configure PHP-FPM
 - Install and configure Nginx server
+- Install the MySql CLI to allow the Craft CP to backup the DB
 - Install Composer to manage all PHP dependencies
 - Install and configure MySql Database server
 - Create and configure a new Craft CMS 3 project
